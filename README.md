@@ -1,24 +1,19 @@
-# Slides
+# GDW Quiz
 
-HTML Slidedecks für meine Vorlesungen. Das Projekt nutzt den Static Page Generator [11ty](https://www.11ty.dev/docs/) und [reveal.js](https://revealjs.com/).
+Kleines GDW Quiz bzw. eine Hilfe für die Prüfung. Das Projekt nutzt den Static Page Generator [11ty](https://www.11ty.dev/docs/).
 
 ## Ordnerstruktur
 
 ### `/docs`
 kompilierter Code … hier wird nix gemacht
 
-### `/reveal`
-Hier lebt Reveal.js und es muss nix gemacht werden.
-
 ### `/src` hier wird entwickelt
 
 ```
-_components         Layout- oder Funktionsschnipsel
 _data               Zusätzliche Daten oder Hilffunktionen
 _layouts            Templates
 assets              SCSS, Skripts, Fonts, etc … alles was kein Content ist
 compiled-assets     Kompilierte Dateien, z.B. CSS
-presentations       Content, und zwar pro Slidedeck ein Ordner
 ```
 
 ### Weitere Dateien
