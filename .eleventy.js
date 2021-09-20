@@ -1,0 +1,67 @@
+const htmlmin = require('html-minifier');
+
+
+module.exports = function (eleventyConfig) {
+  eleventyConfig.setUseGitIgnore(false);
+
+
+  // Watch our compiled assets for changes
+  eleventyConfig.addWatchTarget('./src/compiled-assets/main.css');
+  eleventyConfig.addWatchTarget('./src/assets/scripts/main.js');
+
+  // Copy _data
+  eleventyConfig.addPassthroughCopy({ 'src/_data': 'assets/data' });
+
+  // Copy src/compiled-assets to /assets
+  eleventyConfig.addPassthroughCopy({ 'src/compiled-assets': 'assets' });
+
+  // Copy all fonts
+  eleventyConfig.addPassthroughCopy({ 'src/assets/fonts': 'assets/fonts' });
+
+  // Copy asset images
+  eleventyConfig.addPassthroughCopy({ 'src/assets/images': 'assets/images' });
+  
+  // Copy Scripts
+  eleventyConfig.addPassthroughCopy({ 'src/assets/scripts': 'assets/scripts' });
+  eleventyConfig.addWatchTarget("./src/assets/scripts");
+
+
+  eleventyConfig.addCollection("all", function (collection) {
+    return collection.getAll();
+  });
+
+  if (process.env.ELEVENTY_ENV === 'production') {
+    eleventyConfig.addTransform('htmlmin', (content, outputPath) => {
+      if (outputPath.endsWith('.html')) {
+        const minified = htmlmin.minify(content, {
+          collapseInlineTagWhitespace: false,
+          collapseWhitespace: true,
+          removeComments: true,
+          sortClassName: true,
+          useShortDoctype: true,
+        });
+
+        return minified;
+      }
+
+      return content;
+    });
+  }
+
+  return {
+    dir: {
+      includes: '_components',
+      input: 'src',
+      layouts: '_layouts',
+      output: 'docs',
+    },
+    pathPrefix: "",
+    markdownTemplateEngine: 'njk',
+    htmlTemplateEngine: 'njk',
+    templateFormats: [
+      'md',
+      'html',
+      'njk'
+    ],
+  };
+};
